@@ -38,9 +38,6 @@ func Test_part2(t *testing.T) {
 				t.Errorf("part2() = %v, want %v", got, tt.want)
 			}
 		})
-		for i := 0; i < 1000; i++ {
-			part2(tt.input)
-		}
 	}
 }
 
@@ -77,8 +74,33 @@ func Test_part2alt(t *testing.T) {
 				t.Errorf("Test_part2alt() = %v, want %v", got, tt.want)
 			}
 		})
-		for i := 0; i < 1000; i++ {
-			part2alt(tt.input)
-		}
+	}
+}
+
+func Benchmark_Part1(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part1(data)
+	}
+}
+
+func Benchmark_Part2(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part2(data)
+	}
+}
+
+func Benchmark_Part1alt(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part1alt(data)
+	}
+}
+
+func Benchmark_Part2alt(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part2alt(data)
 	}
 }

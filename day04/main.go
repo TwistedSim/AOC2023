@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"math"
-	"strconv"
+	"regexp"
 	"strings"
 )
 
@@ -19,23 +19,14 @@ func (c *Card) matchingNumbers() (matches int) {
 	return len(util.Intersection(c.Numbers, c.WinningNumbers))
 }
 
-func parseNumbers(numbersString string) (numbers []int) {
-	for _, numberString := range strings.Fields(numbersString) {
-		number, _ := strconv.Atoi(numberString)
-		numbers = append(numbers, number)
-	}
-	return numbers
-}
-
 func parseCards(input string) (cards []Card) {
+	cardRegex := regexp.MustCompile(`Card\s+(?P<Id>\d+):(?P<Numbers>(\s+\d+)+)\s\|(?P<WinningNumbers>(\s+\d+)+)+`)
 	for _, cardString := range strings.Split(input, "\n") {
-		cardParts := strings.Split(cardString, ":")
-		id, _ := strconv.Atoi(strings.Fields(cardParts[0])[1])
-		numbersParts := strings.Split(cardParts[1], "|")
+		params := util.ParseStringFromRegex(cardRegex, cardString)
 		cards = append(cards, Card{
-			Id:             id,
-			Numbers:        parseNumbers(numbersParts[0]),
-			WinningNumbers: parseNumbers(numbersParts[1]),
+			Id:             util.ParseNumbers(params["Id"])[0],
+			Numbers:        util.ParseNumbers(params["Numbers"]),
+			WinningNumbers: util.ParseNumbers(params["WinningNumbers"]),
 		})
 	}
 	return cards
@@ -87,6 +78,6 @@ func part1(input string) (result int) {
 
 func part2(input string) (result int) {
 	cards := parseCards(input)
-	rewards := computeWinningCards(cards)
-	return rewards + len(cards)
+	result = computeWinningCards(cards) + len(cards)
+	return
 }

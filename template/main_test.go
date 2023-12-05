@@ -38,3 +38,17 @@ func Test_part2(t *testing.T) {
 		})
 	}
 }
+
+func Benchmark_Part1(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part1(data)
+	}
+}
+
+func Benchmark_Part2(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part2(data)
+	}
+}

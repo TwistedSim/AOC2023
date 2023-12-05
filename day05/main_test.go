@@ -11,8 +11,8 @@ func Test_part1(t *testing.T) {
 		input string
 		want  int
 	}{
-		{"actual", util.ReadFile("example1.txt"), 13},
-		{"input", util.ReadFile("input.txt"), 23941},
+		{"actual", util.ReadFile("example1.txt"), 35},
+		{"input", util.ReadFile("input.txt"), 289863851},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -29,8 +29,7 @@ func Test_part2(t *testing.T) {
 		input string
 		want  int
 	}{
-		{"example1", util.ReadFile("example2.txt"), 30},
-		{"input", util.ReadFile("input.txt"), 5571760},
+		{"actual", util.ReadFile("example2.txt"), 46},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -41,10 +40,16 @@ func Test_part2(t *testing.T) {
 	}
 }
 
+func Benchmark_Part1(b *testing.B) {
+	data := util.ReadFile("input.txt")
+	for n := 0; n < b.N; n++ {
+		part1(data)
+	}
+}
+
 func Benchmark_Part2(b *testing.B) {
 	data := util.ReadFile("input.txt")
-	cards := parseCards(data)
 	for n := 0; n < b.N; n++ {
-		computeWinningCards(cards)
+		part2(data)
 	}
 }
