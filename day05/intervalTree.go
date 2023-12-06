@@ -64,6 +64,10 @@ func (root *Node) search(x int) *Interval {
 	return root.Right.search(x)
 }
 
+func (tree *IntervalTree) searchInterval(x *Interval) (res []*Interval) {
+	return tree.Root.searchInterval(x)
+}
+
 func (root *Node) searchInterval(x *Interval) (res []*Interval) {
 	if root == nil {
 		return []*Interval{}
