@@ -87,32 +87,33 @@ func part2(input string) (result int) {
 			if interval.Low < lowestMatch {
 				nextIntervals = append(nextIntervals, &Interval{Low: interval.Low, High: lowestMatch})
 			}
-			
-			
+
 			largestMatch := matchingIntervals[len(matchingIntervals)-1].High
 			if interval.High > largestMatch {
-				nextIntervals = append(nextIntervals, &Interval{Low:  largestMatch, High: interval.High})
+				nextIntervals = append(nextIntervals, &Interval{Low: largestMatch, High: interval.High})
 			}
-			
+
 			for _, m := range matchingIntervals {
 				nextIntervals = append(nextIntervals, &Interval{
 					Low:  util.Max(interval.Low, m.Low) + m.Offset,
 					High: util.Min(interval.High, m.High) + m.Offset,
 				})
 			}
-			
+
 			for i := 0; i < len(matchingIntervals)-1; i++ {
 				m1, m2 := matchingIntervals[i], matchingIntervals[i+1]
 				if m2.Low > m1.High {
 					nextIntervals = append(nextIntervals, &Interval{Low: m1.High, High: m2.Low})
 				}
 			}
-			
+
 		}
 		currentIntervals = nextIntervals
 	}
 
-	for _, i := range currentIntervals {fmt.Println(i) }
+	for _, i := range currentIntervals {
+		fmt.Println(i)
+	}
 	result = currentIntervals[0].Low
 	for _, seed := range currentIntervals {
 		if seed.Low < result {

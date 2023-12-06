@@ -1,5 +1,7 @@
 package util
 
+import "fmt"
+
 type Number interface {
     int64 | float64 | int
 }
@@ -51,4 +53,19 @@ func MinMax(array []int) (int, int) {
         }
     }
     return min, max
+}
+
+func Transpose(a, b []int) ([][]int, error) {
+
+    if len(a) != len(b) {
+        return nil, fmt.Errorf("zip: arguments must be of same length")
+    }
+
+    r := make([][]int, len(a))
+
+    for i, e := range a {
+        r[i] = []int{e, b[i]}
+    }
+
+    return r, nil
 }
