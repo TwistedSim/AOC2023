@@ -72,20 +72,15 @@ func Transpose(a, b []int) ([][]int, error) {
 
 func GCD(a, b int) int {
 	for b != 0 {
-		t := b
-		b = a % b
-		a = t
+		b, a = a % b, b
 	}
 	return a
 }
 
-func LCM(integers ...int) int {
-	a, b := integers[0], integers[1]
-	result := a * b / GCD(a, b)
-
-	for i := 2; i < len(integers); i++ {
-			result = LCM(result, integers[i])
-	}
-
-	return result
+func LCM(a, b int, integers ...int) int {
+    result := a * b / GCD(a, b)
+    for i := 0; i < len(integers); i++ {
+        result = LCM(result, integers[i])
+    }
+    return result
 }

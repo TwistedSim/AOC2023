@@ -18,25 +18,24 @@ type Vertex struct {
 	Right *Vertex
 }
 
-func (g *Graph) AddVertex(key, val string) {
-	g.Vertices[key] = &Vertex{Value: val}
+func (g *Graph) AddVertex(v string) {
+	g.Vertices[v] = &Vertex{Value: v}
 }
 
 func (g *Graph) AddEdges(srcKey, leftKey, rightKey string) {
 	g.Vertices[srcKey].Left = g.Vertices[leftKey]
 	g.Vertices[srcKey].Right = g.Vertices[rightKey]
-
 }
 
 func makeGraph(list map[string][]string) *Graph {
 	g := &Graph{Vertices: map[string]*Vertex{}}
 	for vertex, edges := range list {
 		if _, ok := g.Vertices[vertex]; !ok {
-			g.AddVertex(vertex, vertex)
+			g.AddVertex(vertex)
 		}
 		for _, edge := range edges {
 			if _, ok := g.Vertices[edge]; !ok {
-				g.AddVertex(edge, edge)
+				g.AddVertex(edge)
 			}
 		}
 		g.AddEdges(vertex, edges[0], edges[1])
@@ -72,36 +71,30 @@ func main() {
 	fmt.Println("Output:", ans)
 }
 
-func part1(input string) (result int) {
+func part1(input string) int {
 	graph, directions := parseMaps(input)
-	vertex := graph.Vertices["AAA"]
-	for vertex.Value != "ZZZ" {
-		if directions[result%len(directions)] == 'L' {
-			vertex = vertex.Left
-		} else {
-			vertex = vertex.Right
+	vertex, i := graph.Vertices["AAA"], 0
+	for i = 0; vertex.Value != "ZZZ"; i++ {
+		switch directions[i%len(directions)] {
+			case 'L': vertex = vertex.Left
+			case 'R': vertex = vertex.Right
 		}
-		result++
 	}
-	return result
+	return i
 }
 
-func part2(input string) (result int) {
+func part2(input string) int {
 	graph, directions := parseMaps(input)
-	results := []int{}
+	result, i := 1, 1
 	for _, v := range graph.Vertices {
-		if v.Value[2] == 'A' {
-			dirIndex := 0
-			for v.Value[2] != 'Z' {
-				if directions[dirIndex%len(directions)] == 'L' {
-					v = v.Left 
-				} else {
-					v = v.Right 
-				}
-				dirIndex++
+		if v.Value[2] != 'A' { continue }
+		for i = 0; v.Value[2] != 'Z'; i++ {
+			switch directions[i%len(directions)] {
+				case 'L': v = v.Left
+				case 'R': v = v.Right
 			}
-			results = append(results, dirIndex)
 		}
+		result = util.LCM(result, i)
 	}
-	return util.LCM(results...)
+	return result
 }
