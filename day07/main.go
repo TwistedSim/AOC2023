@@ -8,7 +8,6 @@ import (
 	"strings"
 
 	"golang.org/x/exp/maps"
-	"golang.org/x/exp/slices"
 )
 
 func main() {
@@ -81,14 +80,14 @@ func getCardType(card string, joker bool) int {
 func getCardTypeNormal(card string) int {
 	hist := histogram(card)
 	values := maps.Values(hist)
-	sort.Ints(values)
-	switch values[len(values)-1] {
+	sort.Slice(values, func(i, j int) bool { return values[i] > values[j] })
+	switch values[0] {
 	case 5:
 		return fiveOfAKind
 	case 4:
 		return fourOfAKind
 	case 3:
-		if slices.Contains(values, 2) {
+		if values[1] == 2 {
 			return fullHouse
 		}
 		return threeOfAKind
