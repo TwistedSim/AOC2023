@@ -53,15 +53,14 @@ func MinMax(array []int) (int, int) {
     return min, max
 }
 
-func Transpose(array [][]int) [][]int {
-    r := make([][]int, len(array[0]))
+func Transpose[T comparable](array [][]T) [][]T {
+    r := make([][]T, len(array[0]))
     for i := 0; i < len(r); i++ {
-        r[i] = make([]int, len(array))
+        r[i] = make([]T, len(array))
         
 		for j := 0; j < len(r[i]); j++ {
 			r[i][j] = array[j][i]
 		}
-        
 	}
     return r
 }
@@ -87,4 +86,14 @@ func LCM(a, b int, integers ...int) int {
         result = LCM(result, integers[i])
     }
     return result
+}
+
+func ManhattanDistance(p1, p2 []int) int {
+	absDiff := func (x, y int) int {
+		if x < y {
+			return y - x
+		 }
+		 return x - y
+	}
+	return absDiff(p2[0], p1[0]) + absDiff(p2[1], p1[1])
 }
