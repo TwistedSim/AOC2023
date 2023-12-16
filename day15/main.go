@@ -40,7 +40,7 @@ func part1(input string) (result int) {
 }
 
 type Lense struct {
-	Label string
+	Label       string
 	FocalLength int
 }
 
@@ -48,7 +48,7 @@ func parseLense(input string) Lense {
 	parts := strings.Split(input, "=")
 	focalLength, _ := strconv.Atoi(parts[1])
 	return Lense{
-		Label: parts[0],
+		Label:       parts[0],
 		FocalLength: focalLength,
 	}
 }
@@ -73,7 +73,7 @@ func part2(input string) (result int) {
 			} else {
 				boxes[h] = append(boxes[h], lense)
 			}
-		} else {  // ends with -
+		} else { // ends with -
 			label := step[:len(step)-1]
 			h := hash(label)
 			if idx := contains(boxes[h], label); idx != -1 {
@@ -83,7 +83,7 @@ func part2(input string) (result int) {
 	}
 	for boxIdx, lenses := range boxes {
 		for lenseIdx, lense := range lenses {
-			result += (boxIdx+1)*(lenseIdx+1)*lense.FocalLength
+			result += (boxIdx + 1) * (lenseIdx + 1) * lense.FocalLength
 		}
 	}
 	return
