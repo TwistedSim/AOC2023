@@ -12,6 +12,7 @@ func Test_part1(t *testing.T) {
 		want  int
 	}{
 		{"example1", util.ReadFile("example1.txt"), 123123},
+		//{"input", util.ReadFile("input.txt"), 9999},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -29,6 +30,7 @@ func Test_part2(t *testing.T) {
 		want  int
 	}{
 		{"example2", util.ReadFile("example2.txt"), 123123},
+		//{"input", util.ReadFile("input.txt"), 9999},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
