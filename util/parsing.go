@@ -24,3 +24,12 @@ func ParseNumbers(numbersString string) (numbers []int) {
 	}
 	return numbers
 }
+
+func ParseRuneGrid(input string) [][]rune {
+	lines := strings.Split(input, "\n")
+	grid := make([][]rune, len(lines))
+	for i, line := range lines {
+		grid[i] = []rune(line)
+	}
+	return grid
+}
